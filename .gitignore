@@ -1,0 +1,5 @@
+deepdream/frames/*
+keras-dream/input/*
+keras-dream/on_hold/*
+keras-dream/results/*
+keras-dream/stages/*
