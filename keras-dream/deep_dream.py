@@ -1,3 +1,7 @@
+#
+# this file has been modified since its original state
+#
+
 '''Deep Dreaming in Keras.
 
 Run the script with:

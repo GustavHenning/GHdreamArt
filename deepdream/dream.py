@@ -1,3 +1,7 @@
+#
+# This file has been modified since its original state
+#
+
 # imports and basic notebook setup
 from cStringIO import StringIO
 import numpy as np
@@ -5,13 +9,23 @@ import scipy.ndimage as nd
 import PIL.Image
 from IPython.display import clear_output, Image, display
 from google.protobuf import text_format
+import argparse
 
 import caffe
+
+num_frames=50
 
 # If your GPU supports CUDA and Caffe was built with CUDA support,
 # uncomment the following to run Caffe operations on the GPU.
 caffe.set_mode_gpu()
 caffe.set_device(0) # select GPU device if multiple devices exist
+
+parser = argparse.ArgumentParser(description='Deep Dreams with Google.')
+parser.add_argument('base_image_path', metavar='base', type=str,
+                    help='Path to the image to transform.')
+
+args = parser.parse_args()
+base_image_path = args.base_image_path
 
 def showarray(a, fmt='jpeg'):
     a = np.uint8(np.clip(a, 0, 255))
@@ -106,7 +120,7 @@ def deepdream(net, base_img, iter_n=10, octave_n=4, octave_scale=1.4,
     return deprocess(net, src.data[0])
 
 
-img = np.float32(PIL.Image.open('sky1024px.jpg'))
+img = np.float32(PIL.Image.open(base_image_path))
 showarray(img)
 
 _=deepdream(net, img)
@@ -120,7 +134,7 @@ frame_i = 0
 
 h, w = frame.shape[:2]
 s = 0.05 # scale coefficient
-for i in xrange(100):
+for i in xrange(num_frames):
     frame = deepdream(net, frame)
     PIL.Image.fromarray(np.uint8(frame)).save("frames/%04d.jpg"%frame_i)
     frame = nd.affine_transform(frame, [1-s,1-s,1], [h*s/2,w*s/2,0], order=1)
