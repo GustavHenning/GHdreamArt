@@ -119,7 +119,7 @@ def deepdream(net, base_img, iter_n=10, octave_n=4, octave_scale=1.4,
     # returning the resulting image
     return deprocess(net, src.data[0])
 
-
+print(PIL.Image.open(base_image_path))
 img = np.float32(PIL.Image.open(base_image_path))
 showarray(img)
 

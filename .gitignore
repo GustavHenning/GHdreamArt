@@ -1,5 +1,6 @@
 input/*
 on_hold/*
+showcase/*
 deepdream/results/*
 deepdream/frames/*
 keras-dream/results/*
